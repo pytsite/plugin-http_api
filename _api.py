@@ -1,6 +1,6 @@
 """PytSite HTTP API Functions
 """
-from typing import Union as _Union, Mapping as _Mapping
+from typing import Union as _Union, Mapping as _Mapping, Type as _Type
 from pytsite import router as _router, http as _http, routing as _routing, logger as _logger, events as _events
 
 __author__ = 'Alexander Shepetko'
@@ -10,14 +10,12 @@ __license__ = 'MIT'
 _rules_map = _routing.RulesMap()
 
 
-def handle(method: str, path: str, controller: _Union[str, _routing.Controller], name: str = None, version: int = 0,
+def handle(method: str, path: str, controller: _Union[str, _Type], name: str = None, version: int = 0,
            defaults: dict = None):
     """Register API request handler
     """
     if isinstance(controller, str):
         controller = _rules_map.get(controller)
-    elif not isinstance(controller, _routing.Controller):
-        raise TypeError('Str or controller expected, got {}'.format(type(controller)))
 
     _rules_map.add(_routing.Rule(controller, path, name, defaults, method, {'version': version}))
 
@@ -53,13 +51,7 @@ def url(name: str, args: _Mapping = None, version: int = 1) -> str:
 def call(name: str, args: _Mapping = None):
     """Call a controller
     """
-    controller = _rules_map.get(name).controller
-
-    controller.args.clear()
-    if args:
-        controller.args.update(args)
-
-    return controller.exec()
+    return _rules_map.get(name).controller_class(args).exec()
 
 
 def on_pre_request(handler, priority: int = 0):

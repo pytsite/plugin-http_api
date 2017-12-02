@@ -34,11 +34,11 @@ class Entry(_routing.Controller):
             _events.fire('pytsite.http_api.request')
 
             status = 200
-            rule.controller.args.clear().update(self.args).update(rule.args)
-            rule.controller.args['_pytsite_http_api_version'] = version
-            rule.controller.args['_pytsite_http_api_rule_name'] = rule.name
-            rule.controller.files = self.files
-            controller_response = rule.controller.exec()
+            controller = rule.controller_class(self.args, self.request)  # type: _routing.Controller
+            controller.args.update(rule.args)
+            controller.args['_pytsite_http_api_version'] = version
+            controller.args['_pytsite_http_api_rule_name'] = rule.name
+            controller_response = controller.exec()
 
             if isinstance(controller_response, tuple):
                 if len(controller_response) > 1:
