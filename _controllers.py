@@ -28,11 +28,11 @@ class Entry(_routing.Controller):
             _lang.set_current(language)
 
         try:
-            _events.fire('pytsite.http_api.pre_request')
+            _events.fire('http_api@pre_request')
 
             rule = _api.match(_router.request().method, endpoint, version)
 
-            _events.fire('pytsite.http_api.request')
+            _events.fire('http_api@request')
 
             status = 200
             controller = rule.controller_class(self.args, self.request)  # type: _routing.Controller

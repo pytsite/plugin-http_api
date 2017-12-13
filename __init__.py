@@ -1,14 +1,17 @@
 """PytSite HTTP API Plugin
 """
-# Public API
-from ._api import handle, endpoint, url, call, on_pre_request, on_request
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
+from pytsite import plugman as _plugman
 
-def _init():
+if _plugman.is_installed(__name__):
+    # Public API
+    from ._api import handle, endpoint, url, call, on_pre_request, on_request
+
+
+def plugin_load():
     from pytsite import router, tpl
     from plugins import assetman
     from . import _eh, _controllers
@@ -25,8 +28,5 @@ def _init():
 
     # Assets
     assetman.register_package(__name__)
-    assetman.t_js(__name__ + '@**')
+    assetman.t_js(__name__)
     assetman.js_module('http-api', __name__ + '@http-api')
-
-
-_init()

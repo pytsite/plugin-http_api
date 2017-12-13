@@ -57,10 +57,10 @@ def call(name: str, args: _Mapping = None):
 def on_pre_request(handler, priority: int = 0):
     """Register handler which will be called before handling every request to HTTP API.
     """
-    _events.listen('pytsite.http_api.pre_request', handler, priority)
+    _events.listen('http_api@pre_request', handler, priority)
 
 
 def on_request(handler, priority: int = 0):
     """Register handler which will be called on every request to HTTP API.
     """
-    _events.listen('pytsite.http_api.request', handler, priority)
+    _events.listen('http_api@request', handler, priority)
