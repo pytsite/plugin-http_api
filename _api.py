@@ -23,6 +23,7 @@ def handle(method: str, path: str, controller: _Union[str, _Type], name: str = N
 def match(method: str, path: str, version: int) -> _routing.Rule:
     try:
         for rule in _rules_map.match(path, method):
+            print(rule.attrs['version'], (0, version))
             if rule.attrs['version'] in (0, version):
                 return rule
 

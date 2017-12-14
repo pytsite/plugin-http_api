@@ -1,6 +1,5 @@
 """PytSite HTTP API Endpoints
 """
-from collections import Mapping as _Mapping
 from pytsite import router as _router, logger as _logger, lang as _lang, events as _events, routing as _routing, \
     http as _http, formatters as _formatters, errors as _errors, reg as _reg
 from . import _api
@@ -11,8 +10,8 @@ __license__ = 'MIT'
 
 
 class Entry(_routing.Controller):
-    def __init__(self, args: _Mapping = None, request: _http.request.Request = None):
-        super().__init__(args, request)
+    def __init__(self):
+        super().__init__()
 
         self.args.add_formatter('http_api_version', _formatters.Int())
 
@@ -35,7 +34,9 @@ class Entry(_routing.Controller):
             _events.fire('http_api@request')
 
             status = 200
-            controller = rule.controller_class(self.args, self.request)  # type: _routing.Controller
+            controller = rule.controller_class()  # type: _routing.Controller
+            controller.request = self.request
+            controller.args.update(self.args)
             controller.args.update(rule.args)
             controller.args['_pytsite_http_api_version'] = version
             controller.args['_pytsite_http_api_rule_name'] = rule.name
