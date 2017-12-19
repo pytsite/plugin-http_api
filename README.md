@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 1.3.1 (2017-12-19)
+
+Removed forgotten print statement.
+
+
 ### 1.3 (2017-12-14)
 
 Support for PytSite-7.1.
