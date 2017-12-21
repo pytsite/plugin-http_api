@@ -11,13 +11,23 @@ if _plugman.is_installed(__name__):
     from ._api import handle, endpoint, url, call, on_pre_request, on_request
 
 
-def plugin_load():
+def _register_assetman_resources():
     from plugins import assetman
 
-    # Assets
-    assetman.register_package(__name__)
-    assetman.t_js(__name__)
-    assetman.js_module('http-api', __name__ + '@http-api')
+    if not assetman.is_package_registered(__name__):
+        assetman.register_package(__name__)
+        assetman.t_js(__name__)
+        assetman.js_module('http-api', __name__ + '@http-api')
+
+    return assetman
+
+
+def plugin_install():
+    _register_assetman_resources().build(__name__)
+
+
+def plugin_load():
+    _register_assetman_resources()
 
 
 def plugin_load_uwsgi():
@@ -33,10 +43,3 @@ def plugin_load_uwsgi():
 
     # Event listeners
     router.on_response(_eh.router_response)
-
-
-def plugin_install():
-    from plugins import assetman
-
-    plugin_load()
-    assetman.build(__name__)

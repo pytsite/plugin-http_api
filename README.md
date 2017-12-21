@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 1.3.3 (2017-12-21)
+
+Init code refactored.
+
+
 ### 1.3.2 (2017-12-20)
 
 Init code refactored.
