@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 1.3.4 (2017-01-03)
+
+Argument error in `call()` fixed.
+
+
 ### 1.3.3 (2017-12-21)
 
 Init code refactored.

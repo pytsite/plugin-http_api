@@ -51,7 +51,10 @@ def url(name: str, args: _Mapping = None, version: int = 1) -> str:
 def call(name: str, args: _Mapping = None):
     """Call a controller
     """
-    return _rules_map.get(name).controller_class(args).exec()
+    controller = _rules_map.get(name).controller_class(args)  # type: _routing.Controller
+    controller.args.update(args)
+
+    return controller.exec()
 
 
 def on_pre_request(handler, priority: int = 0):
