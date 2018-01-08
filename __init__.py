@@ -35,8 +35,8 @@ def plugin_load_uwsgi():
     from . import _eh, _controllers
 
     # HTTP API entry point route
-    router.handle(_controllers.Entry, '/api/<int:http_api_version>/<path:http_api_endpoint>',
-                  'pytsite.http_api@entry', methods='*')
+    router.handle(_controllers.Entry, '/api/<int:http_api_version>/<path:http_api_endpoint>', 'http_api@entry',
+                  methods='*')
 
     # Tpl globals
     tpl.register_global('http_api_endpoint', endpoint)

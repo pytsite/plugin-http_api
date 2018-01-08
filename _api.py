@@ -15,7 +15,7 @@ def handle(method: str, path: str, controller: _Union[str, _Type], name: str = N
     """Register API request handler
     """
     if isinstance(controller, str):
-        controller = _rules_map.get(controller)
+        controller = _rules_map.get(controller).controller_class
 
     _rules_map.add(_routing.Rule(controller, path, name, defaults, method, {'version': version}))
 
@@ -42,7 +42,7 @@ def endpoint(name: str, args: _Mapping = None) -> str:
 def url(name: str, args: _Mapping = None, version: int = 1) -> str:
     """Get an URL for an HTTP API endpoint
     """
-    return _router.rule_url('pytsite.http_api@entry', {
+    return _router.rule_url('http_api@entry', {
         'http_api_version': version,
         'http_api_endpoint': _rules_map.path(name, args)
     })
