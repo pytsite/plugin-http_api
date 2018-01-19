@@ -4,12 +4,17 @@
 ## Changelog
 
 
-### 1.3.5 (2017-01-08)
+### 1.3.6 (2018-01-08)
 
-`handle()`'s fix.
+Exception handling fixed.
 
 
-### 1.3.4 (2017-01-03)
+### 1.3.5 (2018-01-08)
+
+`handle()` fixed.
+
+
+### 1.3.4 (2018-01-03)
 
 Argument error in `call()` fixed.
 

@@ -63,9 +63,6 @@ class Entry(_routing.Controller):
 
             return response
 
-        except _errors.ForbidOperation as e:
-            raise _http.error.Forbidden(e)
-
         except _http.error.Base as e:
             log_msg = '{} {}: {}'.format(request_method, current_path, e.description)
 
