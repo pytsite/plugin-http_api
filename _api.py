@@ -1,11 +1,11 @@
 """PytSite HTTP API Functions
 """
-from typing import Union as _Union, Mapping as _Mapping, Type as _Type
-from pytsite import router as _router, http as _http, routing as _routing, logger as _logger, events as _events
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from typing import Union as _Union, Mapping as _Mapping, Type as _Type
+from pytsite import router as _router, http as _http, routing as _routing, logger as _logger, events as _events
 
 _rules_map = _routing.RulesMap()
 

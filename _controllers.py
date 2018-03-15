@@ -1,12 +1,12 @@
 """PytSite HTTP API Endpoints
 """
-from pytsite import router as _router, logger as _logger, lang as _lang, events as _events, routing as _routing, \
-    http as _http, formatters as _formatters, errors as _errors, reg as _reg
-from . import _api
-
 __author__ = 'Alexander Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
+
+from pytsite import router as _router, logger as _logger, lang as _lang, events as _events, routing as _routing, \
+    http as _http, formatters as _formatters, reg as _reg
+from . import _api
 
 
 class Entry(_routing.Controller):
