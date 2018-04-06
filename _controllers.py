@@ -36,8 +36,8 @@ class Entry(_routing.Controller):
             status = 200
             controller = rule.controller_class()  # type: _routing.Controller
             controller.request = self.request
-            controller.args.update(self.args)
-            controller.args.update(rule.args)
+            controller.args.update(self.args)  # It's important to not overwrite rule's args with input
+            controller.args.update(rule.args)  # It's important to not overwrite rule's args with input
             controller.args['_pytsite_http_api_version'] = version
             controller.args['_pytsite_http_api_rule_name'] = rule.name
             controller_response = controller.exec()
