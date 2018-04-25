@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 1.3.7 (2018-04-25)
+
+Init code refactored.
+
+
 ### 1.3.6 (2018-01-08)
 
 Exception handling fixed.
