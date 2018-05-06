@@ -52,12 +52,12 @@ class Entry(_routing.Controller):
 
             # Simple string should be returned as text/html
             if isinstance(body, str):
-                response = _http.response.Response(body, status, mimetype='text/html')
+                response = _http.Response(body, status, mimetype='text/html')
             else:
                 if isinstance(body, _routing.ControllerArgs):
                     body = dict(body)
 
-                response = _http.response.JSON(body, status)
+                response = _http.JSONResponse(body, status)
 
             response.headers.add('PytSite-HTTP-API-Version', version)
 
@@ -71,11 +71,11 @@ class Entry(_routing.Controller):
             else:
                 _logger.error(log_msg)
 
-            if e.response and isinstance(e.response, _http.response.JSON):
+            if e.response and isinstance(e.response, _http.JSONResponse):
                 response = e.response
                 response.status_code = e.code
             else:
-                response = _http.response.JSON({'error': e.description}, e.code)
+                response = _http.JSONResponse({'error': e.description}, e.code)
 
             response.headers.add('PytSite-HTTP-API-Version', version)
 
@@ -83,7 +83,7 @@ class Entry(_routing.Controller):
 
         except Exception as e:
             _logger.error('{} {}: {}'.format(request_method, current_path, e), exc_info=e)
-            response = _http.response.JSON({'error': str(e)}, 500)
+            response = _http.JSONResponse({'error': str(e)}, 500)
             response.headers.add('PytSite-HTTP-API-Version', version)
 
             return response

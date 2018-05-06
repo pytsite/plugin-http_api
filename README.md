@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 1.4 (2018-05-06)
+
+Support for PytSite-7.17.
+
+
 ### 1.3.7 (2018-04-25)
 
 Init code refactored.
