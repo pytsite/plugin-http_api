@@ -1,6 +1,6 @@
 {
   "name": "http_api",
-  "version": "1.4",
+  "version": "1.5",
   "description": {
     "en": "HTTP API",
     "ru": "HTTP API",
@@ -13,7 +13,7 @@
     "url": "https://shepetko.com"
   },
   "requires": {
-    "pytsite": ">=7.17",
+    "pytsite": ">=7.23",
     "plugins": [
       "assetman",
       "jquery"

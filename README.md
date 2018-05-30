@@ -4,9 +4,14 @@
 ## Changelog
 
 
+### 1.5 (2018-05-30)
+
+Support of `pytsite-7.23`.
+
+
 ### 1.4 (2018-05-06)
 
-Support for PytSite-7.17.
+Support for `pytsite-7.17`.
 
 
 ### 1.3.7 (2018-04-25)
@@ -46,22 +51,22 @@ Removed forgotten print statement.
 
 ### 1.3 (2017-12-14)
 
-Support for PytSite-7.1.
+Support for `pytsite-7.1`.
 
 
 ### 1.2 (2017-12-13)
 
-Support for PytSite-7.0.
+Support for `pytsite-7.0`.
 
 
 ### 1.1.1 (2017-12-02)
 
-Fixed support for PytSite-6.1.
+Fixed support for `pytsite-6.1`.
 
 
 ### 1.1 (2017-12-02)
 
-Support for PytSite-6.1.
+Support for `pytsite-6.1`.
 
 
 ### 1.0 (2017-11-25)
