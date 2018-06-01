@@ -18,7 +18,7 @@ class Entry(_routing.Controller):
     def exec(self):
         version = self.args.pop('http_api_version')
         endpoint = '/' + self.args.pop('http_api_endpoint')
-        current_path = _router.current_path(resolve_alias=False, add_lang_prefix=True)
+        current_path = _router.current_path(False)
         request_method = _router.request().method
 
         # Switch language

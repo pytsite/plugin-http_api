@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 1.6 (2018-06-01)
+
+Support of `pytsite-7.24`.
+
+
 ### 1.5 (2018-05-30)
 
 Support of `pytsite-7.23`.
