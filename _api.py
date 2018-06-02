@@ -53,6 +53,7 @@ def call(name: str, args: _Mapping = None):
     """
     controller = _rules_map.get(name).controller_class()  # type: _routing.Controller
     controller.args.update(args)
+    controller.args.validate()
 
     return controller.exec()
 
