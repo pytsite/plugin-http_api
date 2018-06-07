@@ -10,14 +10,14 @@ from pytsite import router as _router, http as _http, routing as _routing, logge
 _rules_map = _routing.RulesMap()
 
 
-def handle(method: str, path: str, controller: _Union[str, _Type], name: str = None, version: int = 0,
-           defaults: dict = None):
+def handle(method: str, path: str, controller: _Union[str, _Type[_routing.Controller]], name: str = None,
+           version: int = 0, defaults: dict = None):
     """Register API request handler
     """
     if isinstance(controller, str):
         controller = _rules_map.get(controller).controller_class
 
-    _rules_map.add(_routing.Rule(controller, path, name, defaults, method, {'version': version}))
+    _rules_map.add(_routing.Rule(controller, path, name, defaults, method, attrs={'version': version}))
 
 
 def match(method: str, path: str, version: int) -> _routing.Rule:
