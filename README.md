@@ -4,6 +4,13 @@
 ## Changelog
 
 
+### 2.0 (2018-07-16)
+
+- Versioning removed.
+- `Accept-Language` HTTP header support added.
+- Obsolete documentation removed.
+
+
 ### 1.8 (2018-06-07)
 
 Support of `pytsite-7.29`.

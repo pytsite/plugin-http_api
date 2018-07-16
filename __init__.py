@@ -12,7 +12,7 @@ def plugin_load():
     from plugins import assetman
 
     assetman.register_package(__name__)
-    assetman.t_js(__name__)
+    assetman.t_js(__name__, babelify=True)
     assetman.js_module('http-api', __name__ + '@http-api')
 
 
@@ -24,14 +24,10 @@ def plugin_install():
 
 def plugin_load_uwsgi():
     from pytsite import router, tpl
-    from . import _eh, _controllers
+    from . import _controllers
 
     # HTTP API entry point route
-    router.handle(_controllers.Entry, '/api/<int:http_api_version>/<path:http_api_endpoint>', 'http_api@entry',
-                  methods='*')
+    router.handle(_controllers.Entry, '/api/<path:http_api_endpoint>', 'http_api@entry', methods='*')
 
     # Tpl globals
     tpl.register_global('http_api_endpoint', endpoint)
-
-    # Event listeners
-    router.on_response(_eh.router_response)

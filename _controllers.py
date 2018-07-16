@@ -5,32 +5,27 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 from pytsite import router as _router, logger as _logger, lang as _lang, events as _events, routing as _routing, \
-    http as _http, formatters as _formatters, reg as _reg
+    http as _http, reg as _reg
 from . import _api
 
 
 class Entry(_routing.Controller):
-    def __init__(self):
-        super().__init__()
-
-        self.args.add_formatter('http_api_version', _formatters.Int())
-
     def exec(self):
-        version = self.args.pop('http_api_version')
         endpoint = '/' + self.args.pop('http_api_endpoint')
         current_path = _router.current_path(False)
         request_method = _router.request().method
 
         # Switch language
-        language = _router.request().headers.get('PytSite-Lang')
-        if language and _lang.is_defined(language):
-            _lang.set_current(language)
-
+        language = _router.request().headers.get('Accept-Language')  # type: str
+        if language:
+            for lng in language.split(','):
+                lng = lng.strip()
+                if not lng.startswith('q=') and _lang.is_defined(language):
+                    _lang.set_current(language)
+                    break
         try:
             _events.fire('http_api@pre_request')
-
-            rule = _api.match(_router.request().method, endpoint, version)
-
+            rule = _api.match(_router.request().method, endpoint)
             _events.fire('http_api@request')
 
             status = 200
@@ -38,7 +33,6 @@ class Entry(_routing.Controller):
             controller.request = self.request
             controller.args.update(self.args)
             controller.args.update(rule.args)
-            controller.args['_pytsite_http_api_version'] = version
             controller.args['_pytsite_http_api_rule_name'] = rule.name
             controller.args.validate()
             controller_response = controller.exec()
@@ -60,8 +54,6 @@ class Entry(_routing.Controller):
 
                 response = _http.JSONResponse(body, status)
 
-            response.headers.add('PytSite-HTTP-API-Version', version)
-
             return response
 
         except _http.error.Base as e:
@@ -78,13 +70,14 @@ class Entry(_routing.Controller):
             else:
                 response = _http.JSONResponse({'error': e.description}, e.code)
 
-            response.headers.add('PytSite-HTTP-API-Version', version)
-
             return response
+
+        except UserWarning as e:
+            _logger.warn('{} {}: {}'.format(request_method, current_path, e))
+
+            return _http.JSONResponse({'warning': str(e.args[0])}, e.args[1] if len(e.args) else 500)
 
         except Exception as e:
             _logger.error('{} {}: {}'.format(request_method, current_path, e), exc_info=e)
-            response = _http.JSONResponse({'error': str(e)}, 500)
-            response.headers.add('PytSite-HTTP-API-Version', version)
 
-            return response
+            return _http.JSONResponse({'error': str(e.args[0])}, e.args[1] if len(e.args) else 500)

@@ -1,24 +1,21 @@
 define(['jquery'], function ($) {
-    function url(endpoint, data, version) {
-        if (typeof version === 'undefined' || version === null) {
-            version = '1';
-        }
+    function url(endpoint, data) {
+        let r = endpoint.indexOf('http') === 0 ? endpoint : '/api/' + endpoint;
 
-        var r = '/api/' + version + '/' + endpoint;
         if (data instanceof Object)
             r += '?' + $.param(data);
 
         return r;
     }
 
-    function request(method, endpoint, data, version) {
+    function request(method, endpoint, data) {
         data = data || {};
 
-        var ajaxSettings = {
-            url: url(endpoint, null, version),
+        let ajaxSettings = {
+            url: url(endpoint),
             method: method,
             data: data,
-            headers: {'PytSite-Lang': document.documentElement.getAttribute('lang')}
+            headers: {'Accept-Language': document.documentElement.getAttribute('lang')}
         };
 
         if (data instanceof FormData) {
@@ -29,24 +26,24 @@ define(['jquery'], function ($) {
         return $.ajax(ajaxSettings);
     }
 
-    function get(endpoint, data, version) {
-        return request('GET', endpoint, data, version)
+    function get(endpoint, data) {
+        return request('GET', endpoint, data)
     }
 
-    function post(endpoint, data, version) {
-        return request('POST', endpoint, data, version)
+    function post(endpoint, data) {
+        return request('POST', endpoint, data)
     }
 
-    function put(endpoint, data, version) {
-        return request('PUT', endpoint, data, version)
+    function put(endpoint, data) {
+        return request('PUT', endpoint, data)
     }
 
-    function patch(endpoint, data, version) {
-        return request('PATCH', endpoint, data, version)
+    function patch(endpoint, data) {
+        return request('PATCH', endpoint, data)
     }
 
-    function del(endpoint, data, version) {
-        return request('DELETE', endpoint, data, version)
+    function del(endpoint, data) {
+        return request('DELETE', endpoint, data)
     }
 
     return {
