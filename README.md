@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.0.1 (2018-07-17)
+
+Exceptions handling fixed.
+
+
 ### 2.0 (2018-07-16)
 
 - Versioning removed.

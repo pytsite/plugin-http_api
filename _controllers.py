@@ -74,10 +74,8 @@ class Entry(_routing.Controller):
 
         except UserWarning as e:
             _logger.warn('{} {}: {}'.format(request_method, current_path, e))
-
-            return _http.JSONResponse({'warning': str(e.args[0])}, e.args[1] if len(e.args) else 500)
+            return _http.JSONResponse({'warning': str(e.args[0])}, e.args[1] if len(e.args) > 1 else 500)
 
         except Exception as e:
             _logger.error('{} {}: {}'.format(request_method, current_path, e), exc_info=e)
-
-            return _http.JSONResponse({'error': str(e.args[0])}, e.args[1] if len(e.args) else 500)
+            return _http.JSONResponse({'error': str(e.args[0])}, e.args[1] if len(e.args) > 1 else 500)
