@@ -1,16 +1,12 @@
-define(['jquery'], function ($) {
-    function url(endpoint, data) {
-        let r = endpoint.indexOf('http') === 0 ? endpoint : '/api/' + endpoint;
+define(['jquery', 'assetman'], function ($, assetman) {
+    function url(endpoint, data = {}) {
+        if (!endpoint.startsWith('http'))
+            endpoint = '/api/' + endpoint;
 
-        if (data instanceof Object)
-            r += '?' + $.param(data);
-
-        return r;
+        return assetman.url(endpoint, data)
     }
 
-    function request(method, endpoint, data) {
-        data = data || {};
-
+    function request(method, endpoint, data = {}) {
         let ajaxSettings = {
             url: url(endpoint),
             method: method,

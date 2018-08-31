@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.1 (2018-08-31)
+
+Support of `assetman-2.5`.
+
+
 ### 2.0.1 (2018-07-17)
 
 Exceptions handling fixed.
