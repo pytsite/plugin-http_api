@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 2.1.2 (2018-09-19)
+
+Exception JSON serialization fixed.
+
+
 ### 2.1.1 (2018-08-31)
 
 `plugin.json` fixed.

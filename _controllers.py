@@ -68,7 +68,8 @@ class Entry(_routing.Controller):
                 response = e.response
                 response.status_code = e.code
             else:
-                response = _http.JSONResponse({'error': e.description}, e.code)
+                # It is important to do `str(e.description)`, because `e.description` might be an exception
+                response = _http.JSONResponse({'error': str(e.description)}, e.code)
 
             return response
 
