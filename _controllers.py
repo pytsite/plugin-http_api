@@ -37,6 +37,9 @@ class Entry(_routing.Controller):
             controller.args.validate()
             controller_response = controller.exec()
 
+            if isinstance(controller_response, _http.Response):
+                return controller_response
+
             if isinstance(controller_response, tuple):
                 if len(controller_response) > 1:
                     body, status = controller_response[0], controller_response[1]

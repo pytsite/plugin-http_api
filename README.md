@@ -4,6 +4,12 @@
 ## Changelog
 
 
+### 2.2 (2018-09-21)
+
+Support of `pytsite.http.Response` as a response from handling
+controller.
+
+
 ### 2.1.3 (2018-09-21)
 
 JSON serialization of Exceptions fixed.
