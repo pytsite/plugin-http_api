@@ -4,9 +4,14 @@
 ## Changelog
 
 
+### 2.1.3 (2018-09-21)
+
+JSON serialization of Exceptions fixed.
+
+
 ### 2.1.2 (2018-09-19)
 
-Exception JSON serialization fixed.
+JSON serialization of Exceptions fixed.
 
 
 ### 2.1.1 (2018-08-31)
