@@ -1,6 +1,6 @@
 """PytSite HTTP API Plugin
 """
-__author__ = 'Alexander Shepetko'
+__author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
@@ -8,21 +8,7 @@ __license__ = 'MIT'
 from ._api import handle, endpoint, url, call, on_pre_request, on_request
 
 
-def plugin_load():
-    from plugins import assetman
-
-    assetman.register_package(__name__)
-    assetman.t_js(__name__, babelify=True)
-    assetman.js_module('http-api', __name__ + '@http-api')
-
-
-def plugin_install():
-    from plugins import assetman
-
-    assetman.build(__name__)
-
-
-def plugin_load_uwsgi():
+def plugin_load_wsgi():
     from pytsite import router, tpl
     from . import _controllers
 

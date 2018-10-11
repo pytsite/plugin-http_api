@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.0 (2018-10-11)
+
+Support of `pytsite-8.x`, `assetman-3.x`.
+
+
 ### 2.2 (2018-09-21)
 
 Support of `pytsite.http.Response` as a response from handling

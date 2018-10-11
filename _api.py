@@ -1,6 +1,6 @@
 """PytSite HTTP API Functions
 """
-__author__ = 'Alexander Shepetko'
+__author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
@@ -23,7 +23,7 @@ def handle(method: str, path: str, controller: _Union[str, _Type[_routing.Contro
 def match(method: str, path: str) -> _routing.Rule:
     try:
         return _rules_map.match(path, method)[0]
-    except _routing.error.RuleNotFound as e:
+    except _routing.error.RuleNotFound:
         raise _http.error.NotFound()
 
 

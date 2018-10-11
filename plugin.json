@@ -1,6 +1,6 @@
 {
   "name": "http_api",
-  "version": "2.2",
+  "version": "3.0",
   "description": {
     "en": "HTTP API",
     "ru": "HTTP API",
@@ -8,15 +8,14 @@
   },
   "url": "https://github.com/pytsite/plugin-http_api",
   "author": {
-    "name": "Alexander Shepetko",
+    "name": "Oleksandr Shepetko",
     "email": "a@shepetko.com",
     "url": "https://shepetko.com"
   },
   "requires": {
-    "pytsite": ">=7.29",
-    "plugins": [
-      "assetman>=2.5",
-      "jquery"
-    ]
+    "pytsite": ">=8",
+    "plugins": {
+      "assetman": "3.x"
+    }
   }
 }
