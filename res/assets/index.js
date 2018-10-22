@@ -1,5 +1,5 @@
-const $ = require('jquery');
-const assetman = require('@pytsite/assetman');
+import $ from 'jquery';
+import assetman from '@pytsite/assetman';
 
 function url(endpoint, data = {}) {
     if (!endpoint.startsWith('http'))
@@ -44,4 +44,14 @@ function del(endpoint, data) {
     return request('DELETE', endpoint, data)
 }
 
-export {url, request, get, post, put, patch, del}
+const api = {
+    url: url,
+    request: request,
+    get: get,
+    post: post,
+    put: put,
+    patch: patch,
+    del: del
+};
+
+export default api;
