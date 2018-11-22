@@ -4,6 +4,12 @@
 ## Changelog
 
 
+### 3.3 (2018-11-21)
+
+- `request()` JS API function now uses `Promise`.
+- Unused `url()` JS API function removed.
+
+
 ### 3.2 (2018-10-22)
 
 Support of `assetman-5.x`.

@@ -1,27 +1,26 @@
 import $ from 'jquery';
-import assetman from '@pytsite/assetman';
 
-function url(endpoint, data = {}) {
-    if (!endpoint.startsWith('http'))
-        endpoint = '/api/' + endpoint;
-
-    return assetman.url(endpoint, data)
-}
+const currentLang = document.documentElement.getAttribute('lang');
 
 function request(method, endpoint, data = {}) {
-    let ajaxSettings = {
-        url: url(endpoint),
-        method: method,
-        data: data,
-        headers: {'Accept-Language': document.documentElement.getAttribute('lang')}
-    };
+    return new Promise((resolve, reject) => {
+        if (!endpoint.startsWith('http'))
+            endpoint = new URL(`api/${endpoint}`, window.location.origin);
 
-    if (data instanceof FormData) {
-        ajaxSettings.processData = false;
-        ajaxSettings.contentType = false;
-    }
+        const ajaxSettings = {
+            url: endpoint,
+            method: method,
+            data: data,
+            headers: {'Accept-Language': currentLang}
+        };
 
-    return $.ajax(ajaxSettings);
+        if (data instanceof FormData) {
+            ajaxSettings.processData = false;
+            ajaxSettings.contentType = false;
+        }
+
+        $.ajax(ajaxSettings).done(data => resolve(data)).fail(jqXHR => reject(jqXHR));
+    });
 }
 
 function get(endpoint, data) {
@@ -45,7 +44,6 @@ function del(endpoint, data) {
 }
 
 const api = {
-    url: url,
     request: request,
     get: get,
     post: post,
