@@ -5,7 +5,7 @@ __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
 from pytsite import router as _router, logger as _logger, lang as _lang, events as _events, routing as _routing, \
-    http as _http, reg as _reg
+    http as _http, reg as _reg, errors as _errors
 from . import _api
 
 
@@ -59,7 +59,10 @@ class Entry(_routing.Controller):
 
             return response
 
-        except _http.error.Base as e:
+        except (_http.error.Base, _errors.ForbidOperation) as e:
+            if isinstance(e, _errors.ForbidOperation):
+                e = _http.error.Forbidden(e)
+
             log_msg = '{} {}: {}'.format(request_method, current_path, e.description)
 
             if _reg.get('debug'):

@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.3.1 (2018-12-05)
+
+Support of `ForbidOperation` exception fixed.
+
+
 ### 3.3 (2018-11-21)
 
 - `request()` JS API function now uses `Promise`.
