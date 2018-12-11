@@ -11,6 +11,7 @@ from . import _api
 
 class Entry(_routing.Controller):
     def exec(self):
+        del self.args['_pytsite_router_rule_name']
         endpoint = '/' + self.args.pop('http_api_endpoint')
         current_path = _router.current_path(False)
         request_method = _router.request().method
@@ -28,36 +29,15 @@ class Entry(_routing.Controller):
             rule = _api.match(_router.request().method, endpoint)
             _events.fire('http_api@request')
 
-            status = 200
             controller = rule.controller_class()  # type: _routing.Controller
             controller.request = self.request
             controller.args.update(self.args)
             controller.args.update(rule.args)
             controller.args['_pytsite_http_api_rule_name'] = rule.name
             controller.args.validate()
-            controller_response = controller.exec()
 
-            if isinstance(controller_response, _http.Response):
-                return controller_response
-
-            if isinstance(controller_response, tuple):
-                if len(controller_response) > 1:
-                    body, status = controller_response[0], controller_response[1]
-                else:
-                    body = controller_response[0]
-            else:
-                body = controller_response
-
-            # Simple string should be returned as text/html
-            if isinstance(body, str):
-                response = _http.Response(body, status, mimetype='text/html')
-            else:
-                if isinstance(body, _routing.ControllerArgs):
-                    body = dict(body)
-
-                response = _http.JSONResponse(body, status)
-
-            return response
+            response = controller.exec()
+            return response if isinstance(response, _http.Response) else _http.JSONResponse(response)
 
         except (_http.error.Base, _errors.ForbidOperation) as e:
             if isinstance(e, _errors.ForbidOperation):

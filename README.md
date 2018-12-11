@@ -4,6 +4,13 @@
 ## Changelog
 
 
+### 3.4  (2018-12-11)
+
+- `url()` function returned to JS API.
+- Asynchronous API functions made `async`.
+- Code cleanup.
+
+
 ### 3.3.1 (2018-12-05)
 
 Support of `ForbidOperation` exception fixed.

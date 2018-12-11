@@ -1,18 +1,6 @@
 {
   "name": "@pytsite/http-api",
-  "version": "2.3",
-  "description": "",
   "main": "index.js",
-  "keywords": [
-    "pytsite",
-    "http-api"
-  ],
-  "author": {
-    "name": "Oleksandr Shepetko",
-    "email": "a@shepetko.com",
-    "url": "https://shepetko.com"
-  },
-  "license": "MIT",
   "dependencies": {
     "jquery": "3.x"
   }

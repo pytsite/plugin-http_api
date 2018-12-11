@@ -1,14 +1,22 @@
 import $ from 'jquery';
+import assetman from '@pytsite/assetman';
 
 const currentLang = document.documentElement.getAttribute('lang');
 
-function request(method, endpoint, data = {}) {
-    return new Promise((resolve, reject) => {
-        if (!endpoint.startsWith('http'))
-            endpoint = new URL(`api/${endpoint}`, window.location.origin);
+function url(endpoint, args) {
+    if (!endpoint.startsWith('http'))
+        endpoint = new URL(`api/${endpoint}`, window.location.origin).toString();
 
+    if (args)
+        endpoint = assetman.url(endpoint, args);
+
+    return endpoint;
+}
+
+async function request(method, endpoint, data = {}, returnResponseObject = false) {
+    return new Promise((resolve, reject) => {
         const ajaxSettings = {
-            url: endpoint,
+            url: url(endpoint),
             method: method,
             data: data,
             headers: {'Accept-Language': currentLang}
@@ -19,31 +27,36 @@ function request(method, endpoint, data = {}) {
             ajaxSettings.contentType = false;
         }
 
-        $.ajax(ajaxSettings).done(data => resolve(data)).fail(jqXHR => reject(jqXHR));
+        $.ajax(ajaxSettings).done((data, textStatus, response) => {
+            returnResponseObject ? resolve({data: data, response: response}) : resolve(data);
+        }).fail(response => {
+            reject(response)
+        });
     });
 }
 
-function get(endpoint, data) {
-    return request('GET', endpoint, data)
+async function get(endpoint, data, returnResponseObject = false) {
+    return request('GET', endpoint, data, returnResponseObject)
 }
 
-function post(endpoint, data) {
-    return request('POST', endpoint, data)
+async function post(endpoint, data, returnResponseObject = false) {
+    return request('POST', endpoint, data, returnResponseObject)
 }
 
-function put(endpoint, data) {
-    return request('PUT', endpoint, data)
+async function put(endpoint, data, returnResponseObject = false) {
+    return request('PUT', endpoint, data, returnResponseObject)
 }
 
-function patch(endpoint, data) {
-    return request('PATCH', endpoint, data)
+async function patch(endpoint, data, returnResponseObject = false) {
+    return request('PATCH', endpoint, data, returnResponseObject)
 }
 
-function del(endpoint, data) {
-    return request('DELETE', endpoint, data)
+async function del(endpoint, data, returnResponseObject = false) {
+    return request('DELETE', endpoint, data, returnResponseObject)
 }
 
 const api = {
+    url: url,
     request: request,
     get: get,
     post: post,
