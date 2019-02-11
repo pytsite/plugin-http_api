@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.4.1  (2019-02-11)
+
+Double slashed URLs issue fixed.
+
+
 ### 3.4  (2018-12-11)
 
 - `url()` function returned to JS API.

@@ -37,7 +37,7 @@ def url(name: str, args: _Mapping = None) -> str:
     """Get an URL for an HTTP API endpoint
     """
     return _router.rule_url('http_api@entry', {
-        'http_api_endpoint': _rules_map.path(name, args)
+        'http_api_endpoint': _rules_map.path(name, args).lstrip('/')
     })
 
 
