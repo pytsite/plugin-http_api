@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.4.2  (2019-02-21)
+
+Logging issue fixed.
+
+
 ### 3.4.1  (2019-02-11)
 
 Double slashed URLs issue fixed.

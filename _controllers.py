@@ -40,15 +40,13 @@ class Entry(_routing.Controller):
             return response if isinstance(response, _http.Response) else _http.JSONResponse(response)
 
         except (_http.error.Base, _errors.ForbidOperation) as e:
+            if _reg.get('debug'):
+                _logger.error(e)
+            else:
+                _logger.error('{} {}: {}'.format(request_method, current_path, e.description))
+
             if isinstance(e, _errors.ForbidOperation):
                 e = _http.error.Forbidden(e)
-
-            log_msg = '{} {}: {}'.format(request_method, current_path, e.description)
-
-            if _reg.get('debug'):
-                _logger.error(log_msg, exc_info=e)
-            else:
-                _logger.error(log_msg)
 
             if e.response and isinstance(e.response, _http.JSONResponse):
                 response = e.response
