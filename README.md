@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.4.3  (2019-02-28)
+
+Exceptions handling fixed.
+
+
 ### 3.4.2  (2019-02-21)
 
 Logging issue fixed.
