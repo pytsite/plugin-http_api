@@ -4,6 +4,11 @@
 ## Changelog
 
 
+### 3.4.4  (2019-07-16)
+
+`handle()` now accepts tuple of strings as `method` argument. 
+
+
 ### 3.4.3  (2019-02-28)
 
 Exceptions handling fixed.

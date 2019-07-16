@@ -4,32 +4,31 @@ __author__ = 'Oleksandr Shepetko'
 __email__ = 'a@shepetko.com'
 __license__ = 'MIT'
 
-from pytsite import router as _router, logger as _logger, lang as _lang, events as _events, routing as _routing, \
-    http as _http, reg as _reg, errors as _errors
+from pytsite import router, logger, lang, events, routing, http, reg, errors
 from . import _api
 
 
-class Entry(_routing.Controller):
+class Entry(routing.Controller):
     def exec(self):
         del self.args['_pytsite_router_rule_name']
         endpoint = '/' + self.args.pop('http_api_endpoint')
-        current_path = _router.current_path(False)
-        request_method = _router.request().method
+        current_path = router.current_path(False)
+        request_method = router.request().method
 
         # Switch language
-        language = _router.request().headers.get('Accept-Language')  # type: str
+        language = router.request().headers.get('Accept-Language')  # type: str
         if language:
             for lng in language.split(','):
                 lng = lng.strip()
-                if not lng.startswith('q=') and _lang.is_defined(language):
-                    _lang.set_current(language)
+                if not lng.startswith('q=') and lang.is_defined(language):
+                    lang.set_current(language)
                     break
         try:
-            _events.fire('http_api@pre_request')
-            rule = _api.match(_router.request().method, endpoint)
-            _events.fire('http_api@request')
+            events.fire('http_api@pre_request')
+            rule = _api.match(router.request().method, endpoint)
+            events.fire('http_api@request')
 
-            controller = rule.controller_class()  # type: _routing.Controller
+            controller = rule.controller_class()  # type: routing.Controller
             controller.request = self.request
             controller.args.update(self.args)
             controller.args.update(rule.args)
@@ -37,30 +36,30 @@ class Entry(_routing.Controller):
             controller.args.validate()
 
             response = controller.exec()
-            return response if isinstance(response, _http.Response) else _http.JSONResponse(response)
+            return response if isinstance(response, http.Response) else http.JSONResponse(response)
 
-        except (_http.error.Base, _errors.ForbidOperation) as e:
-            if _reg.get('debug'):
-                _logger.error(e)
+        except (http.error.Base, errors.ForbidOperation) as e:
+            if reg.get('debug'):
+                logger.error(e)
             else:
-                _logger.error('{} {}: {}'.format(request_method, current_path, e.description))
+                logger.error('{} {}: {}'.format(request_method, current_path, e.description))
 
-            if isinstance(e, _errors.ForbidOperation):
-                e = _http.error.Forbidden(e)
+            if isinstance(e, errors.ForbidOperation):
+                e = http.error.Forbidden(e)
 
-            if e.response and isinstance(e.response, _http.JSONResponse):
+            if e.response and isinstance(e.response, http.JSONResponse):
                 response = e.response
                 response.status_code = e.code
             else:
                 # It is important to do `str(e.description)`, because `e.description` might be an exception
-                response = _http.JSONResponse({'error': str(e.description)}, e.code)
+                response = http.JSONResponse({'error': str(e.description)}, e.code)
 
             return response
 
         except UserWarning as e:
-            _logger.warn('{} {}: {}'.format(request_method, current_path, e))
-            return _http.JSONResponse({'warning': str(e)}, 200)
+            logger.warn('{} {}: {}'.format(request_method, current_path, e))
+            return http.JSONResponse({'warning': str(e)}, 200)
 
         except Exception as e:
-            _logger.error('{} {}: {}'.format(request_method, current_path, e), exc_info=e)
-            return _http.JSONResponse({'error': str(e)}, 500)
+            logger.error('{} {}: {}'.format(request_method, current_path, e), exc_info=e)
+            return http.JSONResponse({'error': str(e)}, 500)

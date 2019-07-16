@@ -8,7 +8,7 @@ __license__ = 'MIT'
 from ._api import handle, endpoint, url, call, on_pre_request, on_request
 
 
-def plugin_load_wsgi():
+def plugin_load():
     from pytsite import router, tpl
     from . import _controllers
 
